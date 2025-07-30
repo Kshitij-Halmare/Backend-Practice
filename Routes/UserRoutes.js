@@ -70,4 +70,17 @@ router.put("/update/:id",async(req,res)=>{
     })         
     }
 })
-// router.delete("/user/:id")
+router.delete("/user/:id",async(req,res)=>{
+    const userId=req.params.id;
+    const user=await User.findAndDelete({email:emailId});
+    if(!user){
+        return res.status(404).json({
+            message:"User not found"
+        })
+    }else{
+        return res.status(200).json({
+            message:"User deleted successfully" 
+        })
+    }
+})
+export default router;
