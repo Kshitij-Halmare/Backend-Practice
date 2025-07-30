@@ -55,3 +55,19 @@ router.get('/user/:id',async(req,res)=>{
         })
     }
 })
+router.put("/update/:id",async(req,res)=>{
+    const userId=req.params.id;
+    const user=await User.find({email:userId});
+    if(!user){
+        return res.status(404).json({
+            message:"User not found"
+        })
+    }else{
+        const updateUser=await User.findAndUpdate({email:userId},req.body, {new:true, runValidators:true });
+        return res.status(200).json({
+            message:"User updated successfully",
+            user:updateUser
+    })         
+    }
+})
+// router.delete("/user/:id")
